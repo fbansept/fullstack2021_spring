@@ -7,6 +7,8 @@ import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
@@ -26,6 +28,15 @@ public class Utilisateur {
     @ManyToOne
     @JsonView(VueUtilisateur.class)
     private Statut statut;
+
+    @ManyToMany
+    @JoinTable(
+            name="competence_utilisateur",
+            joinColumns = @JoinColumn(name = "utilisateur_id"),
+            inverseJoinColumns = @JoinColumn(name = "competence_id")
+    )
+    @JsonView(VueUtilisateur.class)
+    List<Competence> listeCompetence = new ArrayList<>();
 
     public Integer getId() {
         return id;
@@ -57,5 +68,13 @@ public class Utilisateur {
 
     public void setStatut(Statut statut) {
         this.statut = statut;
+    }
+
+    public List<Competence> getListeCompetence() {
+        return listeCompetence;
+    }
+
+    public void setListeCompetence(List<Competence> listeCompetence) {
+        this.listeCompetence = listeCompetence;
     }
 }
