@@ -12,6 +12,7 @@ import java.util.List;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Utilisateur {
 
     @Id
